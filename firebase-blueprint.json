@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User profile data including balance and holdings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phoneNumber": { "type": "string" },
+        "bio": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "avatarScale": { "type": "number" },
+        "avatarOffset": { "type": "number" },
+        "walletId": { "type": "string" },
+        "balance": { "type": "number" },
+        "pin": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "holdings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assetId": { "type": "string" },
+              "fractionsOwned": { "type": "number" },
+              "averagePrice": { "type": "number" }
+            }
+          }
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string", "enum": ["BUY", "SELL", "SWAP", "DEPOSIT", "WITHDRAW"] },
+              "assetId": { "type": "string" },
+              "amount": { "type": "number" },
+              "timestamp": { "type": "string" },
+              "status": { "type": "string", "enum": ["COMPLETED", "PENDING", "FAILED"] }
+            }
+          }
+        }
+      },
+      "required": ["id", "name", "walletId"]
+    },
+    "ArtAsset": {
+      "title": "Art Asset",
+      "description": "Information about an artwork fractionalized for investment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "artist": { "type": "string" },
+        "year": { "type": "string" },
+        "totalValue": { "type": "number" },
+        "fractionPrice": { "type": "number" },
+        "totalFractions": { "type": "number" },
+        "availableFractions": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "gallery": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "imageUrl": { "type": "string" },
+              "title": { "type": "string" },
+              "year": { "type": "string" }
+            }
+          }
+        },
+        "insuranceStatus": { "type": "string", "enum": ["SECURED", "WARNING", "EXPIRED"] },
+        "insuranceCompany": { "type": "string" },
+        "policyNumber": { "type": "string" },
+        "insuranceExpiry": { "type": "string" },
+        "technicalReportUrl": { "type": "string" },
+        "description": { "type": "string" },
+        "isCatalogOnly": { "type": "boolean" }
+      },
+      "required": ["id", "title", "artist", "totalValue", "fractionPrice"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile and financial data"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "User transaction history"
+    },
+    "/users/{userId}/holdings/{assetId}": {
+      "schema": "UserHolding",
+      "description": "User asset holdings"
+    },
+    "/assets/{assetId}": {
+      "schema": "ArtAsset",
+      "description": "Artwork assets available for investment"
+    }
+  }
+}

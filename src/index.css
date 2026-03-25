@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-shake: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* OasisRJ Phone Input Styling */
+.oasis-phone-input {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.oasis-phone-input:focus-within {
+  border-color: #25D366;
+  background: white;
+  box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.1), 0 8px 10px -6px rgba(37, 211, 102, 0.1);
+  transform: translateY(-1px);
+}
+
+.oasis-phone-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  background: transparent;
+  padding: 0.5rem;
+  width: 100%;
+  letter-spacing: -0.02em;
+}
+
+.oasis-phone-input .PhoneInputCountry {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+  border-right: 1px solid #e2e8f0;
+}
+
+.oasis-phone-input .PhoneInputCountrySelect {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.oasis-phone-input .PhoneInputCountryIcon {
+  width: 1.75rem;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.oasis-phone-input:hover .PhoneInputCountryIcon {
+  transform: scale(1.1);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUNDO DE ARTE Mobile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: #030712;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .splash-logo {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #fde68a, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.05em;
+            margin-bottom: 1rem;
+        }
+        .splash-loader {
+            width: 40px;
+            height: 2px;
+            background: rgba(245, 158, 11, 0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .splash-loader::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #f59e0b;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.2s ease-in-out 0s 2;
+        }
+    </style>
+</head>
+<body>
+    <div id="splash-screen">
+        <div class="splash-logo">OASIS</div>
+        <div class="splash-loader"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+    <script>
+        window.hideSplash = () => {
+            const splash = document.getElementById('splash-screen');
+            if (splash && splash.style.display !== 'none') {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 400); // Reduzido de 500ms para 400ms
+            }
+        };
+
+        // Tenta esconder assim que o DOM estiver pronto se o app já montou
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.appMounted) window.hideSplash();
+        });
+
+        window.addEventListener('load', window.hideSplash);
+        
+        // Safety timeout reduzido para 3 segundos
+        setTimeout(window.hideSplash, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "OASIS - Fundo de Arte",
+  "description": "Plataforma de investimento em frações de obras de arte icônicas do Rio de Janeiro.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}
